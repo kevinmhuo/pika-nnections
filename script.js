@@ -1,80 +1,42 @@
-// Predefined Pokémon lists for each category
-const categories = {
-    water: ['Squirtle', 'Gyarados', 'Vaporeon', 'Lapras'],
-    fire: ['Charizard', 'Flareon', 'Arcanine', 'Magmar'],
-    legendary: ['Mew', 'Lugia', 'Rayquaza', 'Ho-Oh'],
-    evolution: ['Charmander', 'Eevee', 'Magikarp', 'Bulbasaur']
-};
+// Array to hold the selected Pokémon
+let selectedItems = [];
 
-// Combine all the Pokémon into a single array
-let pokemonList = Object.values(categories).flat();
-
-// Function to shuffle the Pokémon array
-function shuffle(array) {
-    for (let i = array.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [array[i], array[j]] = [array[j], array[i]];
+// Function to select a Pokémon
+function selectItem(item) {
+    if (selectedItems.includes(item.textContent)) {
+        // If already selected, deselect it
+        selectedItems = selectedItems.filter(pokemon => pokemon !== item.textContent);
+        item.style.backgroundColor = "#ffcc00";
+    } else {
+        // Select the item
+        selectedItems.push(item.textContent);
+        item.style.backgroundColor = "#ff5733";
     }
-    return array;
 }
 
-// Shuffle the Pokémon list
-pokemonList = shuffle(pokemonList);
+// Function to check the connections
+function checkConnections() {
+    const correctGroups = [
+        ["Pikachu", "Raichu", "Jolteon"],
+        ["Charmander", "Charizard", "Vaporeon"],
+        ["Bulbasaur", "Venusaur", "Blastoise"],
+        ["Squirtle", "Jigglypuff", "Eevee"]
+    ];
 
-// Dynamically add the shuffled Pokémon to the grid
-window.onload = function() {
-    const grid = document.querySelector('.grid');
-    grid.innerHTML = ''; // Clear the grid
-    
-    // Add each Pokémon as a button in the grid
-    pokemonList.forEach(pokemon => {
-        const button = document.createElement('button');
-        button.classList.add('grid-item');
-        button.textContent = pokemon;
-        button.addEventListener('click', handleSelection);
-        grid.appendChild(button);
+    let result = "Incorrect! Try again.";
+
+    // Check if the selected items form one of the correct groups
+    correctGroups.forEach(group => {
+        if (group.every(pokemon => selectedItems.includes(pokemon))) {
+            result = "Correct! You found a connection.";
+        }
     });
-};
 
-// Track selected words for the game
-let selectedWords = [];
+    document.getElementById("result").textContent = result;
 
-function handleSelection() {
-    const pokemon = this.textContent;
-
-    // If the Pokémon is already selected, deselect it
-    if (selectedWords.includes(pokemon)) {
-        this.style.backgroundColor = '#eee'; // Reset the button color
-        selectedWords = selectedWords.filter(word => word !== pokemon); // Remove from the selection list
-    } else if (selectedWords.length < 4) {
-        // Select the Pokémon if less than 4 are selected
-        this.style.backgroundColor = '#3b4cca';
-        selectedWords.push(pokemon);
-    } else {
-        alert("You can only select up to 4 Pokémon at a time!");
-    }
-}
-
-document.getElementById('submitBtn').addEventListener('click', function () {
-    let result = '';
-    if (checkCategories(selectedWords)) {
-        result = 'Correct!';
-    } else {
-        result = 'Try again.';
-    }
-    document.getElementById('result').textContent = result;
-    resetGame();
-});
-
-function checkCategories(selected) {
-    const groups = Object.values(categories);
-    // Check if the selected group matches any full category
-    return groups.some(group => group.every(word => selected.includes(word)));
-}
-
-function resetGame() {
-    selectedWords = [];
-    document.querySelectorAll('.grid-item').forEach(button => {
-        button.style.backgroundColor = '#eee';
+    // Reset selection
+    selectedItems = [];
+    document.querySelectorAll('.grid-item').forEach(item => {
+        item.style.backgroundColor = "#ffcc00";
     });
 }
