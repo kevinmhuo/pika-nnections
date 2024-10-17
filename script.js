@@ -18,7 +18,7 @@ function shuffle(array) {
     return array;
 }
 
-// Shuffle the Pokémon when the page loads
+// Shuffle the Pokémon list
 pokemonList = shuffle(pokemonList);
 
 // Dynamically add the shuffled Pokémon to the grid
@@ -40,7 +40,7 @@ window.onload = function() {
 let selectedWords = [];
 
 function handleSelection() {
-    if (selectedWords.length < 4) {
+    if (selectedWords.length < 4 && !selectedWords.includes(this.textContent)) {
         this.style.backgroundColor = '#3b4cca';
         selectedWords.push(this.textContent);
     }
@@ -59,6 +59,7 @@ document.getElementById('submitBtn').addEventListener('click', function () {
 
 function checkCategories(selected) {
     const groups = Object.values(categories);
+    // Check if the selected group matches any full category
     return groups.some(group => group.every(word => selected.includes(word)));
 }
 
