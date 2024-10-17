@@ -40,9 +40,18 @@ window.onload = function() {
 let selectedWords = [];
 
 function handleSelection() {
-    if (selectedWords.length < 4 && !selectedWords.includes(this.textContent)) {
+    const pokemon = this.textContent;
+
+    // If the Pokémon is already selected, deselect it
+    if (selectedWords.includes(pokemon)) {
+        this.style.backgroundColor = '#eee'; // Reset the button color
+        selectedWords = selectedWords.filter(word => word !== pokemon); // Remove from the selection list
+    } else if (selectedWords.length < 4) {
+        // Select the Pokémon if less than 4 are selected
         this.style.backgroundColor = '#3b4cca';
-        selectedWords.push(this.textContent);
+        selectedWords.push(pokemon);
+    } else {
+        alert("You can only select up to 4 Pokémon at a time!");
     }
 }
 
