@@ -3,21 +3,39 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pika-nnections</title>
+    <meta name="description" content="Pika-nnections: A Pokémon-themed connections guessing game">
+    <title>Pika-nnections | Pokémon Connections Game</title>
     <link rel="stylesheet" href="styles.css">
+    <link rel="icon" href="pokemon-favicon.ico">
 </head>
 <body>
-    <div class="container">
-        <h1>Pika-nnections</h1>
-        <p>Group the Pokémon into their correct categories!</p>
-        
-        <!-- Grid where Pokémon buttons will be displayed -->
-        <div class="grid"></div>
-        
-        <!-- Submit button and result area -->
-        <button id="submitBtn">Submit</button>
-        <div id="result"></div>
-    </div>
+    <header>
+        <h1>Welcome to Pika-nnections!</h1>
+        <p>Can you find the connections between these Pokémon?</p>
+    </header>
+
+    <main>
+        <div class="grid-container">
+            <div class="grid-item" onclick="selectItem(this)">Pikachu</div>
+            <div class="grid-item" onclick="selectItem(this)">Charmander</div>
+            <div class="grid-item" onclick="selectItem(this)">Bulbasaur</div>
+            <div class="grid-item" onclick="selectItem(this)">Squirtle</div>
+            <div class="grid-item" onclick="selectItem(this)">Raichu</div>
+            <div class="grid-item" onclick="selectItem(this)">Charizard</div>
+            <div class="grid-item" onclick="selectItem(this)">Venusaur</div>
+            <div class="grid-item" onclick="selectItem(this)">Blastoise</div>
+            <div class="grid-item" onclick="selectItem(this)">Jigglypuff</div>
+            <div class="grid-item" onclick="selectItem(this)">Eevee</div>
+            <div class="grid-item" onclick="selectItem(this)">Vaporeon</div>
+            <div class="grid-item" onclick="selectItem(this)">Jolteon</div>
+        </div>
+        <button onclick="checkConnections()">Check Connections</button>
+        <p id="result"></p>
+    </main>
+
+    <footer>
+        <p>© 2024 Pika-nnections. All Pokémon content belongs to their respective owners.</p>
+    </footer>
 
     <script src="script.js"></script>
 </body>
